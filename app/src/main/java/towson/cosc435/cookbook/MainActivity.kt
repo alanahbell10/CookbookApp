@@ -139,7 +139,7 @@ fun IngredientData() {
         mutableStateListOf<Ingredient>()
     }
 // this variable use to handle edit text input value
-    val name = remember { mutableStateOf(TextFieldValue()) }
+    var name = remember { mutableStateOf(TextFieldValue()) }
     val quantity = remember { mutableStateOf(TextFieldValue()) }
     val measurement = remember { mutableStateOf(TextFieldValue()) }
 
@@ -214,6 +214,9 @@ fun IngredientData() {
             onClick = {
                 val newIngredient = Ingredient(name.value.text, measurement.value.text, quantity.value.text)
                 ingredientList.add(newIngredient)
+                name.value = TextFieldValue("")
+                quantity.value = TextFieldValue("")
+                measurement.value = TextFieldValue("")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
