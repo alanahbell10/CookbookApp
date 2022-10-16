@@ -139,7 +139,7 @@ fun IngredientData() {
         mutableStateListOf<Ingredient>()
     }
 // this variable use to handle edit text input value
-    var name = remember { mutableStateOf(TextFieldValue()) }
+    val name = remember { mutableStateOf(TextFieldValue()) }
     val quantity = remember { mutableStateOf(TextFieldValue()) }
     val measurement = remember { mutableStateOf(TextFieldValue()) }
 
@@ -208,7 +208,6 @@ fun IngredientData() {
                 singleLine = true
             )
         }
-        //MeasurementSelect()
 
         Button(
             onClick = {
