@@ -7,8 +7,22 @@ import java.util.List;
 public class Recipe {
      String name;
      List<Ingredient> Ingredients= new ArrayList<Ingredient>();
-     List<String> notes = new ArrayList<String>();
+     String notes;
      //Image mealPicture;
+
+
+     public Recipe(String name, List<Ingredient> ingredients, String notes) {
+          this.name = name;
+          Ingredients = ingredients;
+          this.notes = notes;
+     }
+
+     public Recipe() {
+          this.name = "";
+          Ingredients = new ArrayList<Ingredient>();
+          this.notes = "";
+     }
+
 
 
      public String getName() {
@@ -22,17 +36,14 @@ public class Recipe {
           return Ingredients;
      }
      public void setIngredients(List<Ingredient> ingredients) {
-          Ingredients = ingredients;
+          this.Ingredients = ingredients;
      }
 
-     public List<String> getNotes() {
+     public String getNotes() {
           return notes;
      }
-     public void setNotes(List<String> notes) {
+     public void setNotes(String notes) {
           this.notes = notes;
-     }
-     public void addNote(String note) {
-          this.notes.add(note);
      }
 
      @Override
