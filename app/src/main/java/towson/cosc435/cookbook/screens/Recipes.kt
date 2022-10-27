@@ -13,11 +13,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.navigation.NavHostController
 import towson.cosc435.cookbook.Ingredient
 import towson.cosc435.cookbook.Recipe
 
 @Composable
-fun Recipes() {
+fun Recipes(navController: NavHostController) {
     var ingred1 = Ingredient("Apple", "Cups", "5")
     var ingred2 = Ingredient("Apple", "Cups", "5")
     var ingred3 = Ingredient("Apple", "Cups", "5")
@@ -30,14 +31,20 @@ fun Recipes() {
 
     Column() {
         Row(
+            modifier =
+                Modifier.fillMaxWidth()
         ) {
             Text(testRecipe.name)
         }
         Row(
+            modifier =
+                Modifier.fillMaxWidth()
         ) {
             Text(testRecipe.ingredients.toString())
         }
         Row(
+            modifier =
+                Modifier.fillMaxWidth()
         ) {
             Text(testRecipe.notes)
         }

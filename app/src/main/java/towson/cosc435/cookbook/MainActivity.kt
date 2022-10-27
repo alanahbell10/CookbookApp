@@ -84,11 +84,22 @@ fun MainScreen() {
             Welcome()
         }
         composable(NavRoutes.Recipes.route) {
-            Recipes()
+            Recipes(navController = navController)
         }
         composable(NavRoutes.AddRecipe.route) {
             AddRecipe(navController = navController)
         }
+        composable(NavRoutes.ViewRecipe.route) {
+            ViewRecipe()
+        }
+        composable(NavRoutes.CookingTimer.route) {
+            CookingTimer()
+        }
+        composable(NavRoutes.Welcome.route) {
+            Welcome()
+        }
+
+
     }
 }
 
