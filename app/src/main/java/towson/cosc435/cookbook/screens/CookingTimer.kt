@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import java.util.*
 
 @Composable
-fun CookingTimer(navController: NavHostController) {
+fun CookingTimer() {
     Column() {
         Timer()
     }

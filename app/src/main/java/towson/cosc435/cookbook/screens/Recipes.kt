@@ -11,7 +11,7 @@ import towson.cosc435.cookbook.models.Ingredient
 import towson.cosc435.cookbook.models.Recipe
 
 @Composable
-fun Recipes(navController: NavHostController) {
+fun Recipes() {
     var ingred1 = Ingredient("Apple", "Cups", "5")
     var ingred2 = Ingredient("Apple", "Cups", "5")
     var ingred3 = Ingredient("Apple", "Cups", "5")

@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 
 
 @Composable
-fun ViewRecipe(navController: NavHostController) {
+fun ViewRecipe() {
     Column() {
 
     }

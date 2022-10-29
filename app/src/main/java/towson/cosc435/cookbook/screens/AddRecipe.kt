@@ -32,7 +32,7 @@ import towson.cosc435.cookbook.navigation.NavRoutes
 import towson.cosc435.cookbook.models.Recipe
 
 @Composable
-fun AddRecipe(navController: NavHostController) {
+fun AddRecipe() {
     Column() {
         var newRecipe = remember { mutableStateOf(Recipe()) }
         val recipeName = remember { mutableStateOf(TextFieldValue()) }
@@ -216,7 +216,7 @@ fun AddRecipe(navController: NavHostController) {
                 newRecipe.value.setName(recipeName.toString())
                 newRecipe.value.setNotes(recipeNotes.toString())
                 newRecipe.value.ingredients = ingredientList
-                navController.navigate(NavRoutes.Recipes.route)
+                //navController.navigate(NavRoutes.Recipes.route)
             },
             modifier = Modifier
                 .fillMaxWidth()

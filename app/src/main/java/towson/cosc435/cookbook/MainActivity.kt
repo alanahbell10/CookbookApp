@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,15 +16,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import towson.cosc435.cookbook.ui.theme.CookbookTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import towson.cosc435.cookbook.navigation.NavRoutes
 import towson.cosc435.cookbook.screens.*
 import towson.cosc435.cookbook.screens.AddRecipe
 import towson.cosc435.cookbook.screens.Home
 import towson.cosc435.cookbook.ui.theme.Teal200
+import androidx.navigation.Navigation
 
 
 val Teal = Color(0xFF009688)
@@ -50,38 +54,17 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val navController = rememberNavController()
 
-    /*NavHost(
-        navController = navController,
-        startDestination = NavRoutes.AddRecipe.route
-        //startDestination = NavRoutes.CookingTimer.route
-    ) {
-        composable(NavRoutes.Home.route) {
-            Home()
-        }
-        composable(NavRoutes.Recipes.route) {
-            Recipes(navController = navController)
-        }
-        composable(NavRoutes.AddRecipe.route) {
-            AddRecipe(navController = navController)
-        }
-        composable(NavRoutes.ViewRecipe.route) {
-            ViewRecipe(navController = navController)
-        }
-        composable(NavRoutes.CookingTimer.route) {
-            CookingTimer(navController = navController)
-        }
-    }*/
+
     Scaffold(
         topBar = { TopBar() },
         bottomBar = { BottomNavBar(navController) },
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
-
+                Nav(navController = navController)
             }
         },
         backgroundColor = Color.White
     )
-    //BottomNavBar()
 
 }
 
@@ -92,12 +75,25 @@ fun BottomNavBar(navController: NavController) {
         backgroundColor = Teal200,
         contentColor = Color.White
     ) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
                 icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
                 label = { Text(text = item.title) },
                 selected = false,
-                onClick = { /*TODO*/ })
+                onClick = {
+                    navController.navigate(item.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                })
         }
     }
 }
@@ -109,6 +105,30 @@ fun TopBar() {
         backgroundColor = Teal200,
         contentColor = Color.White
     )
+}
+
+@Composable
+fun Nav(navController: NavHostController) {
+    NavHost(
+        navController,
+        startDestination = NavRoutes.Home.route
+    ) {
+        composable(NavRoutes.Home.route) {
+            Home()
+        }
+        composable(NavRoutes.Recipes.route) {
+            Recipes()
+        }
+        composable(NavRoutes.AddRecipe.route) {
+            AddRecipe()
+        }
+        composable(NavRoutes.ViewRecipe.route) {
+            ViewRecipe()
+        }
+        composable(NavRoutes.CookingTimer.route) {
+            CookingTimer()
+        }
+    }
 }
 
 @Composable
