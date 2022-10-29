@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import towson.cosc435.cookbook.ui.theme.CookbookTheme
 import androidx.navigation.compose.NavHost
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun MainScreen() {
-    //val navController = rememberNavController()
+    val navController = rememberNavController()
 
     /*NavHost(
         navController = navController,
@@ -72,20 +73,20 @@ fun MainScreen() {
     }*/
     Scaffold(
         topBar = { TopBar() },
-        bottomBar = { BottomNavBar() },
+        bottomBar = { BottomNavBar(navController) },
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
 
             }
         },
-        backgroundColor = Color.Black
+        backgroundColor = Color.White
     )
-    BottomNavBar()
+    //BottomNavBar()
 
 }
 
 @Composable
-fun BottomNavBar() {
+fun BottomNavBar(navController: NavController) {
     val items = listOf(NavRoutes.Home, NavRoutes.Recipes, NavRoutes.AddRecipe)
     BottomNavigation(
         backgroundColor = Teal200,
@@ -105,8 +106,8 @@ fun BottomNavBar() {
 fun TopBar() {
     TopAppBar(
         title = { Text(text = "Cookbook", fontSize = 18.sp) },
-        backgroundColor = Color.Magenta,
-        contentColor = Color.Black
+        backgroundColor = Teal200,
+        contentColor = Color.White
     )
 }
 
