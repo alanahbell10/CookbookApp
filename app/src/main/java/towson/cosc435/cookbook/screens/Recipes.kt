@@ -3,9 +3,13 @@ package towson.cosc435.cookbook.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import towson.cosc435.cookbook.models.Ingredient
 import towson.cosc435.cookbook.models.Recipe
@@ -25,25 +29,38 @@ fun Recipes() {
         ingredList,
         "Peel apples and chop thin slices"
     )
+    Card(
+        shape = RoundedCornerShape(5.dp),
+        elevation = 16.dp,
+        modifier = Modifier
+            .padding(start=16.dp, end=16.dp, top=5.dp, bottom=5.dp)
+            .fillMaxWidth()
+    ) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
 
-    Column() {
-        Row(
-            modifier =
+
+            Row(
+                modifier =
                 Modifier.fillMaxWidth()
-        ) {
-            Text(testRecipe.name)
-        }
-        Row(
-            modifier =
+            ) {
+                Text(testRecipe.name)
+            }
+            Row(
+                modifier =
                 Modifier.fillMaxWidth()
-        ) {
-            Text(testRecipe.ingredients.toString())
-        }
-        Row(
-            modifier =
+            ) {
+                Text(testRecipe.ingredients.toString())
+            }
+            Row(
+                modifier =
                 Modifier.fillMaxWidth()
-        ) {
-            Text(testRecipe.notes)
+            ) {
+                Text(testRecipe.notes)
+            }
         }
+
     }
 }
