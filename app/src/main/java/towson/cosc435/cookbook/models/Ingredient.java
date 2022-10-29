@@ -1,4 +1,4 @@
-package towson.cosc435.cookbook;
+package towson.cosc435.cookbook.models;
 
 public class Ingredient {
     String name;

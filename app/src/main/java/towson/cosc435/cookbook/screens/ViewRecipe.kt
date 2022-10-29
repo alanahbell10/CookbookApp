@@ -1,4 +1,15 @@
 package towson.cosc435.cookbook.screens
 
-class ViewRecipe {
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+
+
+@Composable
+fun ViewRecipe(navController: NavHostController) {
+    Column() {
+
+    }
 }
+
+

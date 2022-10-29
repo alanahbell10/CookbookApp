@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 
 import androidx.navigation.NavHostController
-import towson.cosc435.cookbook.Ingredient
+import towson.cosc435.cookbook.models.Ingredient
 
-import towson.cosc435.cookbook.NavRoutes
-import towson.cosc435.cookbook.Recipe
+import towson.cosc435.cookbook.navigation.NavRoutes
+import towson.cosc435.cookbook.models.Recipe
 
 @Composable
 fun AddRecipe(navController: NavHostController) {
@@ -141,7 +141,11 @@ fun AddRecipe(navController: NavHostController) {
             Button(
                 onClick = {
                     val newIngredient =
-                        Ingredient(name.value.text, measurement.value.text, quantity.value.text)
+                        Ingredient(
+                            name.value.text,
+                            measurement.value.text,
+                            quantity.value.text
+                        )
                     ingredientList.add(newIngredient)
                     name.value = TextFieldValue("")
                     quantity.value = TextFieldValue("")

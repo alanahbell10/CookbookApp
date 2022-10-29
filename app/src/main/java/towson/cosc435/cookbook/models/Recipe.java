@@ -1,6 +1,5 @@
-package towson.cosc435.cookbook;
+package towson.cosc435.cookbook.models;
 
-import android.media.Image;
 import java.util.ArrayList;
 import java.util.List;
 
