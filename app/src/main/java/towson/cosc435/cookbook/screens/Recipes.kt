@@ -23,7 +23,8 @@ fun Recipes() {
     var testRecipe = Recipe(
         "Apple Pie",
         ingredList,
-        "Peel apples and chop thin slices"
+        "Peel apples and chop thin slices",
+        120
     )
 
     Column() {

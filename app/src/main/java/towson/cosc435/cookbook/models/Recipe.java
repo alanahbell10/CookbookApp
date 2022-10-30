@@ -7,22 +7,32 @@ public class Recipe {
      String name;
      List<Ingredient> Ingredients= new ArrayList<Ingredient>();
      String notes;
+     int minutes;
      //Image mealPicture;
 
 
-     public Recipe(String name, List<Ingredient> ingredients, String notes) {
+
+     public Recipe(String name, List<Ingredient> ingredients, String notes, int minutes) {
           this.name = name;
           Ingredients = ingredients;
           this.notes = notes;
+          this.minutes = minutes;
      }
 
      public Recipe() {
           this.name = "";
           Ingredients = new ArrayList<Ingredient>();
           this.notes = "";
+          this.minutes = 0;
      }
 
+     public int getMinutes() {
+          return minutes;
+     }
 
+     public void setMinutes(int minutes) {
+          this.minutes = minutes;
+     }
 
      public String getName() {
           return name;
