@@ -1,6 +1,5 @@
 package towson.cosc435.cookbook.navigation
 
-import androidx.compose.ui.res.painterResource
 import towson.cosc435.cookbook.R
 
 sealed class NavRoutes(var route: String, var icon: Int, var title: String) {
