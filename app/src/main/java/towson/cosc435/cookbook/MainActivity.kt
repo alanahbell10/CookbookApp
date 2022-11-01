@@ -82,6 +82,7 @@ fun BottomNavBar(navController: NavController) {
                 icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
                 label = { Text(text = item.title) },
                 selected = false,
+                //help from https://developer.android.com/jetpack/compose/navigation
                 onClick = {
                     navController.navigate(item.route) {
                         navController.graph.startDestinationRoute?.let { route ->
@@ -89,7 +90,6 @@ fun BottomNavBar(navController: NavController) {
                                 saveState = true
                             }
                         }
-
                         launchSingleTop = true
                         restoreState = true
                     }

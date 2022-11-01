@@ -7,10 +7,17 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import towson.cosc435.cookbook.models.Ingredient
 import towson.cosc435.cookbook.models.Recipe
+import towson.cosc435.cookbook.navigation.NavRoutes
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -39,7 +46,8 @@ fun Home() {
                     .fillMaxWidth()
                     .wrapContentSize(), elevation = 5.dp) {
                     Row() {
-                        Button(onClick = { /*TODO*/ }) {
+                        Button(onClick = {
+                        }) {
                             Text("Add New Recipe")
                         }
                     }
@@ -84,7 +92,7 @@ fun favoriteRecipeCard() {
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
                 Column() {
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = { }) {
                         Text("View")
                     }
                 }
@@ -92,3 +100,6 @@ fun favoriteRecipeCard() {
         }
     }
 }
+
+
+
