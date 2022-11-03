@@ -1,10 +1,7 @@
 package towson.cosc435.cookbook.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,25 +25,24 @@ fun CookingTimer() {
         val initialValue = 1f
         var value by remember { mutableStateOf(initialValue) }
 
-        val totalTime: Long = 10000
-        var currentTime by remember { mutableStateOf(totalTime) }
+        val enterMins = remember { mutableStateOf("")}
+        val enterSecs = remember { mutableStateOf("")}
 
-        val enterTime = remember { mutableStateOf(TextFieldValue())}
         var timerRunning by remember { mutableStateOf(false) }
 
+        val totalHours: Long = enterMins.value?.toLongOrNull() ?: 0
+        val totalSecs: Long = enterSecs.value?.toLongOrNull() ?: 0
 
-        Spacer(modifier = Modifier.padding(70.dp))
+        val totalTime: Long = (totalHours * 60000) + (totalSecs * 1000)
+        var currentTime by remember { mutableStateOf(totalTime) }
 
-        Row(modifier = Modifier.padding(12.dp)) {
-            TextField(value = enterTime.value, onValueChange = { enterTime.value = it })
-        }
-
+        Spacer(modifier = Modifier.padding(30.dp))
         Row() {
             Text(
                 text = (currentTime / 1000L).toString(),
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = MaterialTheme.colors.secondary
             )
         }
         LaunchedEffect(key1 = currentTime, key2 = timerRunning) {
@@ -69,7 +65,7 @@ fun CookingTimer() {
                 // change button color
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = if (!timerRunning || currentTime <= 0L) {
-                        Color.Green
+                        MaterialTheme.colors.secondary
                     } else {
                         Color.Red
                     }
@@ -79,10 +75,19 @@ fun CookingTimer() {
                     // change the text of button based on values
                     text = if (timerRunning && currentTime >= 0L) "Stop"
                     else if (!timerRunning && currentTime >= 0L) "Start"
-                    else "Restart"
+                    else "Restart", color = Color.White
                 )
             }
         }
+        Spacer(modifier = Modifier.padding(32.dp))
+        Text("Minutes")
+        TextField(value = enterMins.value, onValueChange = { enterMins.value = it })
+
+        Spacer(modifier = Modifier.padding(12.dp))
+        Text("Seconds")
+        TextField(value = enterSecs.value, onValueChange = { enterSecs.value = it })
+
+
     }
 }
 
