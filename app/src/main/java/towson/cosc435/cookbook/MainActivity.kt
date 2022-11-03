@@ -111,7 +111,7 @@ fun TopBar() {
 fun Nav(navController: NavHostController) {
     NavHost(
         navController,
-        startDestination = NavRoutes.Home.route
+        startDestination = NavRoutes.CookingTimer.route
     ) {
         composable(NavRoutes.Home.route) {
             Home()
