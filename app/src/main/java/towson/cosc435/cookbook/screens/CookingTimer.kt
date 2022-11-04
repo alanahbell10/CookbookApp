@@ -16,11 +16,19 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import java.math.RoundingMode
 import java.util.*
+import kotlin.concurrent.timer
 
 fun getMinutes(totalTime: Long) : Long {
-    var minutes: Long = 0;
+    var minutes: Long = 0
     minutes = (totalTime / 60000).toBigDecimal().setScale(1, RoundingMode.FLOOR).toLong()
     return minutes
+}
+
+fun getSeconds(totalTime: Long) : Long {
+    var seconds: Long = 0
+    var minRemainder = totalTime % 60000
+    seconds = minRemainder / 1000
+    return seconds
 }
 @Composable
 fun CookingTimer() {
@@ -44,16 +52,9 @@ fun CookingTimer() {
 
 
         Spacer(modifier = Modifier.padding(30.dp))
-        Row() {
-            Text(
-                text = (currentTime / 1000L).toString() + " secs.",
-                fontSize = 44.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.secondary
-            )
-        }
+        getDisplayTime(currentTime = currentTime)
         LaunchedEffect(key1 = currentTime, key2 = timerRunning) {
-            if(currentTime > 0 && timerRunning) {
+            if(currentTime > 0 && timerRunning == true) {
                 delay(100L)
                 currentTime -= 100L
                 value = currentTime / totalTime.toFloat()
@@ -66,6 +67,7 @@ fun CookingTimer() {
                     if(currentTime <= 0L) {
                         currentTime = totalTime
                         timerRunning = true
+
                     } else {
                         timerRunning = !timerRunning
                     } },
@@ -86,6 +88,17 @@ fun CookingTimer() {
                 )
             }
         }
+        Row() {
+            Button(onClick = {
+                currentTime = 0
+                timerRunning = false
+                enterMins.value = "0"
+                enterSecs.value = "0"
+            }) {
+                Text("Restart")
+
+            }
+        }
         Spacer(modifier = Modifier.padding(32.dp))
         Text("Minutes")
         TextField(value = enterMins.value, onValueChange = { enterMins.value = it })
@@ -95,10 +108,39 @@ fun CookingTimer() {
         TextField(value = enterSecs.value, onValueChange = { enterSecs.value = it })
 
         Spacer(modifier = Modifier.padding(12.dp))
-        Text(getMinutes(totalTime).toString() + " minutes")
+        Text(getMinutes(currentTime).toString() + " minutes")
+        Spacer(modifier = Modifier.padding(12.dp))
+        Text(getSeconds(currentTime).toString() + " seconds")
 
 
     }
 }
+
+@Composable
+fun getDisplayTime(currentTime: Long) {
+    Row() {
+        if (getMinutes(currentTime) < 0L) {
+            Text(
+                text = getSeconds(currentTime).toString() + " secs.",
+                fontSize = 44.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.secondary
+            )
+        } else {
+            Text(
+                text = getMinutes(currentTime).toString() + " mins "+ getSeconds(currentTime).toString() + " secs",
+                fontSize = 44.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.secondary
+            )
+        }
+    }
+}
+
+@Composable
+fun restartButton() {
+
+}
+
 
 
