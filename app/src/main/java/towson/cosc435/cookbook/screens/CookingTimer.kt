@@ -14,8 +14,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
+import java.math.RoundingMode
 import java.util.*
 
+fun getMinutes(totalTime: Long) : Long {
+    var minutes: Long = 0;
+    minutes = (totalTime / 60000).toBigDecimal().setScale(1, RoundingMode.FLOOR).toLong()
+    return minutes
+}
 @Composable
 fun CookingTimer() {
     Column(modifier = Modifier.fillMaxWidth(),
@@ -30,16 +36,17 @@ fun CookingTimer() {
 
         var timerRunning by remember { mutableStateOf(false) }
 
-        val totalHours: Long = enterMins.value?.toLongOrNull() ?: 0
+        val totalMins: Long = enterMins.value?.toLongOrNull() ?: 0
         val totalSecs: Long = enterSecs.value?.toLongOrNull() ?: 0
 
-        val totalTime: Long = (totalHours * 60000) + (totalSecs * 1000)
+        val totalTime: Long = (totalMins * 60000) + (totalSecs * 1000)
         var currentTime by remember { mutableStateOf(totalTime) }
+
 
         Spacer(modifier = Modifier.padding(30.dp))
         Row() {
             Text(
-                text = (currentTime / 1000L).toString(),
+                text = (currentTime / 1000L).toString() + " secs.",
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colors.secondary
@@ -86,6 +93,9 @@ fun CookingTimer() {
         Spacer(modifier = Modifier.padding(12.dp))
         Text("Seconds")
         TextField(value = enterSecs.value, onValueChange = { enterSecs.value = it })
+
+        Spacer(modifier = Modifier.padding(12.dp))
+        Text(getMinutes(totalTime).toString() + " minutes")
 
 
     }
