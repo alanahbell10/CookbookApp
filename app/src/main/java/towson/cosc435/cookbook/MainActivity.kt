@@ -70,7 +70,7 @@ fun MainScreen() {
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-    val items = listOf(NavRoutes.Home, NavRoutes.Recipes, NavRoutes.AddRecipe)
+    val items = listOf(NavRoutes.Home, NavRoutes.Recipes, NavRoutes.AddRecipe, NavRoutes.CookingTimer)
     BottomNavigation(
         backgroundColor = Teal200,
         contentColor = Color.White
