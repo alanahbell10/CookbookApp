@@ -47,12 +47,15 @@ fun CookingTimer() {
         val totalMins: Long = enterMins.value?.toLongOrNull() ?: 0
         val totalSecs: Long = enterSecs.value?.toLongOrNull() ?: 0
 
-        val totalTime: Long = (totalMins * 60000) + (totalSecs * 1000)
+        var totalTime: Long = (totalMins * 60000) + (totalSecs * 1000)
         var currentTime by remember { mutableStateOf(totalTime) }
 
 
         Spacer(modifier = Modifier.padding(30.dp))
+
         getDisplayTime(currentTime = currentTime)
+
+
         LaunchedEffect(key1 = currentTime, key2 = timerRunning) {
             if(currentTime > 0 && timerRunning == true) {
                 delay(100L)
@@ -99,18 +102,17 @@ fun CookingTimer() {
 
             }
         }
-        Spacer(modifier = Modifier.padding(32.dp))
-        Text("Minutes")
-        TextField(value = enterMins.value, onValueChange = { enterMins.value = it })
+        Spacer(modifier = Modifier.padding(36.dp))
 
-        Spacer(modifier = Modifier.padding(12.dp))
-        Text("Seconds")
-        TextField(value = enterSecs.value, onValueChange = { enterSecs.value = it })
-
-        Spacer(modifier = Modifier.padding(12.dp))
-        Text(getMinutes(currentTime).toString() + " minutes")
-        Spacer(modifier = Modifier.padding(12.dp))
-        Text(getSeconds(currentTime).toString() + " seconds")
+        Column() {
+            Row() {
+                TextField(value = enterMins.value, onValueChange = { enterMins.value = it }, label = { Text(text = "Minutes")})
+            }
+            Spacer(modifier = Modifier.padding(8.dp))
+            Row() {
+                TextField(value = enterSecs.value, onValueChange = { enterSecs.value = it }, label = { Text(text = "Seconds")})
+            }
+        }
 
 
     }
@@ -118,29 +120,58 @@ fun CookingTimer() {
 
 @Composable
 fun getDisplayTime(currentTime: Long) {
-    Row() {
-        if (getMinutes(currentTime) < 0L) {
+
+    Row(verticalAlignment = Alignment.Bottom) {
+        Column() {
             Text(
-                text = getSeconds(currentTime).toString() + " secs.",
-                fontSize = 44.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.secondary
-            )
-        } else {
-            Text(
-                text = getMinutes(currentTime).toString() + " mins "+ getSeconds(currentTime).toString() + " secs",
+                text = getMinutes(currentTime).toString(),
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colors.secondary
             )
         }
+        Column() {
+            Text(
+                text ="M",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.secondary
+            )
+
+        }
+
+        Spacer(modifier = Modifier.padding(4.dp))
+
+        Column() {
+            Text(
+                text = getSeconds(currentTime).toString(),
+                fontSize = 44.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.secondary
+            )
+        }
+        Column() {
+            Row() {
+                Text(
+                    text ="S",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colors.secondary
+                )
+            }
+
+        }
     }
 }
 
 @Composable
-fun restartButton() {
+fun getTime(enterMins:  MutableState<String>, enterSecs: MutableState<String>) {
+
+
+
 
 }
+
 
 
 
