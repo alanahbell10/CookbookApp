@@ -28,6 +28,7 @@ import towson.cosc435.cookbook.screens.AddRecipe
 import towson.cosc435.cookbook.screens.Home
 import towson.cosc435.cookbook.ui.theme.Teal200
 import androidx.navigation.Navigation
+import towson.cosc435.cookbook.models.Recipe
 
 
 val Teal = Color(0xFF009688)
@@ -107,6 +108,7 @@ fun TopBar() {
     )
 }
 
+
 @Composable
 fun Nav(navController: NavHostController) {
     NavHost(
@@ -117,7 +119,7 @@ fun Nav(navController: NavHostController) {
             Home()
         }
         composable(NavRoutes.Recipes.route) {
-            Recipes()
+            Recipes(navController)
         }
         composable(NavRoutes.AddRecipe.route) {
             AddRecipe()
