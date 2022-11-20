@@ -1,5 +1,6 @@
 package towson.cosc435.cookbook.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -39,8 +40,8 @@ fun CookingTimer() {
         val initialValue = 1f
         var value by remember { mutableStateOf(initialValue) }
 
-        val enterMins = remember { mutableStateOf("")}
-        val enterSecs = remember { mutableStateOf("")}
+        val enterMins = remember { mutableStateOf("0")}
+        val enterSecs = remember { mutableStateOf("0")}
 
         var timerRunning by remember { mutableStateOf(false) }
 
@@ -61,6 +62,10 @@ fun CookingTimer() {
                 delay(100L)
                 currentTime -= 100L
                 value = currentTime / totalTime.toFloat()
+            }
+
+            if(currentTime == 0L) {
+
             }
         }
 
@@ -114,6 +119,8 @@ fun CookingTimer() {
             }
         }
 
+        AlertDialogSample(currentTime, timerRunning)
+
 
     }
 }
@@ -165,11 +172,39 @@ fun getDisplayTime(currentTime: Long) {
 }
 
 @Composable
-fun getTime(enterMins:  MutableState<String>, enterSecs: MutableState<String>) {
+fun AlertDialogSample(currentTime: Long, timerRunning: Boolean) {
+    MaterialTheme {
+        Column {
+            val timeRemaining = remember { mutableStateOf(0L) }
+            val openDialog = remember { mutableStateOf(true)}
+            timeRemaining.value = currentTime
 
 
+            if (timeRemaining.value == 0L && timerRunning && openDialog.value) {
 
+                AlertDialog(
+                    onDismissRequest = {
+                        openDialog.value = false
+                    },
+                    title = {
+                        Text(text = "Timer Complete!")
+                    },
+                    text = {},
+                    confirmButton = {
+                    },
+                    dismissButton = {
+                        Button(
 
+                            onClick = {
+                                openDialog.value = false
+                            }) {
+                            Text("Dismiss")
+                        }
+                    }
+                )
+            }
+        }
+    }
 }
 
 
