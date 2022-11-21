@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
 import towson.cosc435.cookbook.models.Ingredient
@@ -33,7 +34,7 @@ import towson.cosc435.cookbook.models.Recipe
 
 @Composable
 fun AddRecipe() {
-    Column() {
+    Column(modifier = Modifier.padding(12.dp)) {
         var newRecipe = remember { mutableStateOf(Recipe()) }
         val recipeName = remember { mutableStateOf(TextFieldValue()) }
         val recipeNotes = remember { mutableStateOf(TextFieldValue()) }
