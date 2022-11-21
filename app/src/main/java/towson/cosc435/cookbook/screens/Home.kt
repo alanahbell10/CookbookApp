@@ -71,7 +71,9 @@ fun favoriteRecipeCard() {
         "Apple Pie",
         ingredList,
         "Peel apples and chop thin slices",
-        120
+        120,
+        8,
+        false
     )
 
     Row() {

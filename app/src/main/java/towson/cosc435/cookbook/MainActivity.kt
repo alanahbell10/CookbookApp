@@ -128,7 +128,7 @@ fun Nav(navController: NavHostController) {
             AddRecipe()
         }
         composable(NavRoutes.ViewRecipe.route) {
-            ViewRecipe()
+            ViewRecipe(navController)
         }
         composable(NavRoutes.CookingTimer.route) {
             CookingTimer()
