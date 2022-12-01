@@ -30,7 +30,7 @@ import towson.cosc435.cookbook.screens.AddRecipe
 import towson.cosc435.cookbook.screens.Home
 import towson.cosc435.cookbook.ui.theme.Teal200
 import androidx.navigation.Navigation
-import towson.cosc435.cookbook.models.Recipe
+import towson.cosc435.cookbook.database.Recipe
 
 
 val Teal = Color(0xFF009688)

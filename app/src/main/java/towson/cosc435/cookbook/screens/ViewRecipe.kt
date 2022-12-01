@@ -13,8 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import towson.cosc435.cookbook.models.Ingredient
 import towson.cosc435.cookbook.models.Recipe
 
 //public var recipe = Recipe()

@@ -7,17 +7,9 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import towson.cosc435.cookbook.models.Ingredient
 import towson.cosc435.cookbook.models.Recipe
-import towson.cosc435.cookbook.navigation.NavRoutes
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

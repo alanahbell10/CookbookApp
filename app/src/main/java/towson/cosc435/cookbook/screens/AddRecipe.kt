@@ -26,11 +26,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
-import androidx.navigation.NavHostController
-import towson.cosc435.cookbook.models.Ingredient
-
-import towson.cosc435.cookbook.navigation.NavRoutes
-import towson.cosc435.cookbook.models.Recipe
+import towson.cosc435.cookbook.database.Recipe
 
 @Composable
 fun AddRecipe() {
