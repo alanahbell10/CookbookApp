@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjvm-default=enable']
+    }
     buildFeatures {
         compose true
     }
@@ -69,5 +72,10 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:1.1.1"
     annotationProcessor "androidx.room:room-compiler:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
+
+    implementation 'com.squareup.moshi:moshi:1.8.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.8.0'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
 
 }
