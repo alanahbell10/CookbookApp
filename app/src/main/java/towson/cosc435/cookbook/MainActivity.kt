@@ -1,5 +1,6 @@
 package towson.cosc435.cookbook
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,18 +8,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import towson.cosc435.cookbook.ui.theme.CookbookTheme
 import androidx.navigation.compose.NavHost
@@ -27,10 +27,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import towson.cosc435.cookbook.navigation.NavRoutes
 import towson.cosc435.cookbook.screens.*
 import towson.cosc435.cookbook.screens.AddRecipe
-import towson.cosc435.cookbook.screens.Home
 import towson.cosc435.cookbook.ui.theme.Teal200
-import androidx.navigation.Navigation
+import towson.cosc435.cookbook.database.CookbookViewModel
 import towson.cosc435.cookbook.database.Recipe
+import towson.cosc435.cookbook.screens.addrecipe.Notes
+import towson.cosc435.cookbook.screens.addrecipe.ViewAddedRecipe
 
 
 val Teal = Color(0xFF009688)
@@ -46,193 +47,139 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
 
-                    MainScreen()
+                    val owner = LocalViewModelStoreOwner.current
 
+                    owner?.let {
+                        val viewModel: CookbookViewModel = viewModel(
+                            it,
+                            "CookbookViewModel",
+                            CookbookViewModelFactory(
+                                LocalContext.current.applicationContext
+                                        as Application
+                            )
+                        )
+
+                        ScreenSetup(viewModel)
+
+                    }
                 }
             }
         }
     }
-}
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
 
+    @Composable
+    fun ScreenSetup(viewModel: CookbookViewModel) {
 
-    Scaffold(
-        topBar = { TopBar() },
-        bottomBar = { BottomNavBar(navController) },
-        content = { padding ->
-            Box(modifier = Modifier.padding(padding)) {
-                Nav(navController = navController)
-            }
+        val allRecipes by viewModel.allRecipes.observeAsState(listOf())
 
-        },
-        backgroundColor = Color.White
-    )
+        MainScreen(
+            allRecipes = allRecipes,
+            viewModel = viewModel
+        )
 
-}
+    }
 
-@Composable
-fun BottomNavBar(navController: NavController) {
-    val items = listOf(NavRoutes.Home, NavRoutes.Recipes, NavRoutes.AddRecipe, NavRoutes.CookingTimer)
-    BottomNavigation(
-        backgroundColor = Teal200,
-        contentColor = Color.White
+    @Composable
+    fun MainScreen(
+        allRecipes: List<Recipe>,
+        viewModel: CookbookViewModel
     ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        items.forEach { item ->
-            BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
-                label = { Text(text = item.title) },
-                selected = false,
-                //help from https://developer.android.com/jetpack/compose/navigation
-                onClick = {
-                    navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
+        val navController = rememberNavController()
+
+
+
+        Scaffold(
+            topBar = { TopBar() },
+            bottomBar = { BottomNavBar(navController) },
+            content = { padding ->
+                Box(modifier = Modifier.padding(padding)) {
+                    NavHost(
+                        navController,
+                        startDestination = NavRoutes.Cookbook.route
+                    ) {
+
+                        composable(NavRoutes.Cookbook.route) {
+                            Cookbook(allRecipes, viewModel, navController)
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                        composable(NavRoutes.CookingTimer.route) {
+                            CookingTimer()
+                        }
+
+                        //add new recipe navigation
+                        composable(NavRoutes.ViewCookbook.route + "/{jsonWithNotes}") { backStackEntry ->
+                            val newRecipe = backStackEntry.arguments?.getString("jsonWithNotes")
+                            ViewAddedRecipe(allRecipes, viewModel, navController, newRecipe.toString())
+                        }
+                        composable(NavRoutes.AddRecipe.route) {
+                            AddRecipe(navController = navController)
+                        }
+                        composable(NavRoutes.Ingredients.route + "/{jsonString}") { backStackEntry ->
+                            val jsonString = backStackEntry.arguments?.getString("jsonString")
+                            Ingredients(navController = navController, jsonString.toString())
+                        }
+                        composable(NavRoutes.Notes.route + "/{jsonWithIngredients}") { backStackEntry ->
+                            val jsonString = backStackEntry.arguments?.getString("jsonWithIngredients")
+                            Notes(allRecipes, viewModel, navController = navController, jsonString.toString())
+                        }
                     }
-                })
-        }
-    }
-}
+                }
 
-@Composable
-fun TopBar() {
-    TopAppBar(
-        title = { Text(text = "Cookbook", fontSize = 18.sp) },
-        backgroundColor = Teal200,
-        contentColor = Color.White
-    )
-}
+            },
+            backgroundColor = Color.White
+        )
 
-
-@Composable
-fun Nav(navController: NavHostController) {
-    NavHost(
-        navController,
-        startDestination = NavRoutes.Home.route
-    ) {
-        composable(NavRoutes.Home.route) {
-            Home()
-        }
-        composable(NavRoutes.Recipes.route) {
-            Recipes(navController)
-        }
-        composable(NavRoutes.AddRecipe.route) {
-            AddRecipe()
-        }
-        composable(NavRoutes.ViewRecipe.route) {
-            ViewRecipe(navController)
-        }
-        composable(NavRoutes.CookingTimer.route) {
-            CookingTimer()
-        }
-    }
-}
-
-@Composable
-fun Header() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Text("Enter recipe details:")
     }
 
-}
-
-@Composable
-fun recipeName() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        TextField(value = "Recipe Name", onValueChange = { })
-    }
-}
-
-@Composable
-fun Ingredient() {
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+    @Composable
+    fun BottomNavBar(navController: NavController) {
+        val items =
+            listOf(NavRoutes.Cookbook, NavRoutes.AddRecipe, NavRoutes.CookingTimer)
+        BottomNavigation(
+            backgroundColor = Teal200,
+            contentColor = Color.White
         ) {
-            TextField(value = "Ingredient", onValueChange = { })
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextField(value = "Quantity", onValueChange = { })
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextField(value = "Measurement", onValueChange = { })
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            addIngredientButton()
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            items.forEach { item ->
+                BottomNavigationItem(
+                    icon = {
+                        Icon(
+                            painterResource(id = item.icon),
+                            contentDescription = item.title
+                        )
+                    },
+                    label = { Text(text = item.title) },
+                    selected = false,
+                    //help from https://developer.android.com/jetpack/compose/navigation
+                    onClick = {
+                        navController.navigate(item.route) {
+                            navController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route) {
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    })
+            }
         }
     }
+
+    @Composable
+    fun TopBar() {
+        TopAppBar(
+            title = { Text(text = "Cookbook", fontSize = 18.sp) },
+            backgroundColor = Teal200,
+            contentColor = Color.White
+        )
+    }
+
 }
 
-@Composable
-fun addIngredientButton() {
-    Row() {
-        Button(
-            onClick = { /* ... */ },
-            // Uses ButtonDefaults.ContentPadding by default
-            contentPadding = PaddingValues(
-                start = 20.dp,
-                top = 12.dp,
-                end = 20.dp,
-                bottom = 12.dp
-            )
-        ) {
-            Text("Add Ingredient")
+    class CookbookViewModelFactory(private val application: Application) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return CookbookViewModel(application) as T
         }
     }
-}
-
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CookbookTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            MainScreen()
-        }
-    }
-}
