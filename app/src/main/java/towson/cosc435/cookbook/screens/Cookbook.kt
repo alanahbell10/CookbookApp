@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.gson.Gson
 import towson.cosc435.cookbook.Teal
 import towson.cosc435.cookbook.database.CookbookViewModel
 import towson.cosc435.cookbook.database.Recipe
+import towson.cosc435.cookbook.navigation.NavRoutes
 import towson.cosc435.cookbook.ui.theme.Purple100
 import towson.cosc435.cookbook.ui.theme.Teal200
 
@@ -36,7 +38,7 @@ fun Cookbook(
         val list = allRecipes
 
         items(list) { recipe ->
-            RecipeRow(recipe = recipe)
+            RecipeRow(recipe = recipe, navController = navController)
         }
     }
 }
@@ -44,9 +46,11 @@ fun Cookbook(
 
 @Composable
 fun RecipeRow(
-    recipe: Recipe
+    recipe: Recipe,
+    navController: NavController
 ) {
-    Card(modifier = Modifier.padding(10.dp).clickable {  }, backgroundColor = Purple100) {
+    val jsonString = Gson().toJson(recipe)
+    Card(modifier = Modifier.padding(10.dp).clickable { navController.navigate(NavRoutes.ViewRecipe.route + "/$jsonString" ) }, backgroundColor = Purple100) {
         Row(modifier = Modifier.padding(10.dp).fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Column(modifier = Modifier.padding(10.dp)) {
                 Text(text = recipe.recipeName)

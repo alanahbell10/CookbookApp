@@ -48,7 +48,7 @@ fun ViewAddedRecipe(
 
         Spacer(modifier = Modifier.padding(20.dp) )
 
-        Button( onClick = {navController.navigate(NavRoutes.AddRecipe.route)} ) {
+        Button( onClick = {navController.navigate(NavRoutes.ViewRecipe.route)} ) {
             Text("Add New Recipe")
         }
 

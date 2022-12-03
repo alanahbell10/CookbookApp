@@ -105,6 +105,11 @@ class MainActivity : ComponentActivity() {
                             CookingTimer()
                         }
 
+                        composable(NavRoutes.ViewRecipe.route + "/{jsonString}") { backStackEntry ->
+                            val jsonString = backStackEntry.arguments?.getString("jsonString")
+                            ViewRecipe(navController = navController, jsonString = jsonString.toString())
+                        }
+
                         //add new recipe navigation
                         composable(NavRoutes.ViewCookbook.route + "/{jsonWithNotes}") { backStackEntry ->
                             val newRecipe = backStackEntry.arguments?.getString("jsonWithNotes")
