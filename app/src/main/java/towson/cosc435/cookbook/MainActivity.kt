@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
 
                         composable(NavRoutes.ViewRecipe.route + "/{jsonString}") { backStackEntry ->
                             val jsonString = backStackEntry.arguments?.getString("jsonString")
-                            ViewRecipe(navController = navController, jsonString = jsonString.toString())
+                            ViewRecipe(allRecipes, viewModel, navController = navController, jsonString = jsonString.toString())
                         }
 
                         //add new recipe navigation
@@ -125,6 +125,12 @@ class MainActivity : ComponentActivity() {
                         composable(NavRoutes.Notes.route + "/{jsonWithIngredients}") { backStackEntry ->
                             val jsonString = backStackEntry.arguments?.getString("jsonWithIngredients")
                             Notes(allRecipes, viewModel, navController = navController, jsonString.toString())
+                        }
+
+                        //edit recipe
+                        composable(NavRoutes.EditRecipe.route + "/{jsonString}") { backStackEntry ->
+                            val jsonString = backStackEntry.arguments?.getString("jsonString")
+                            EditRecipe(allRecipes, viewModel, navController = navController, jsonString = jsonString.toString())
                         }
                     }
                 }

@@ -41,7 +41,7 @@ fun Notes(allRecipes: List<Recipe>, viewModel: CookbookViewModel, navController:
     Modifier.padding(50.dp)) {
         item {
             OutlinedTextField(
-                label = { Text("Notes") },
+                label = { Text("Directions") },
                 value = recipeNotes,
                 onValueChange = onNotesTextChange,
                 singleLine = false

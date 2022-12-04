@@ -3,6 +3,7 @@ package towson.cosc435.cookbook.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+//help from https://www.answertopia.com/jetpack-compose/a-jetpack-compose-room-database-and-repository-tutorial/
 
 @Entity(tableName = "recipes")
 class Recipe {
@@ -40,4 +41,6 @@ class Recipe {
         this.recipeNotes = recipeNotes
 
     }
+
+
 }
