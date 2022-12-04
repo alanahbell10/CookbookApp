@@ -83,7 +83,8 @@ fun AddRecipe(navController: NavController) {
             )
         }
         item {
-            Button(onClick = { navController.navigate(NavRoutes.Ingredients.route + "/$jsonString") }) {
+            Button(onClick = {
+                navController.navigate(NavRoutes.Ingredients.route + "/$jsonString") }) {
                 Text("Proceed")
             }
         }

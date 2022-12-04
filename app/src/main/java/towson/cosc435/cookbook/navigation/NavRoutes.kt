@@ -15,6 +15,9 @@ sealed class NavRoutes(var route: String, var icon: Int, var title: String) {
     object Notes : NavRoutes("notes", R.drawable.ic_add, "Add Notes")
     object ViewCookbook : NavRoutes("viewcookbook", R.drawable.ic_add, "View Cookbook")
 
+    //edit recipe
+    object EditRecipe : NavRoutes("editrecipe", R.drawable.ic_recipe, "Edit Recipe")
+
 
 
 }
