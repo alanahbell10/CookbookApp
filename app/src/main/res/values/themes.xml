@@ -2,6 +2,11 @@
 <resources>
 
     <style name="Theme.Cookbook" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">@color/custom_darkTeal</item>
+        <item name="android:windowBackground">@color/custom_paper</item>
+        <item name="colorPrimary">@color/custom_teal</item>
+        <item name="colorAccent">@color/custom_darkTeal</item>
+
+
     </style>
 </resources>

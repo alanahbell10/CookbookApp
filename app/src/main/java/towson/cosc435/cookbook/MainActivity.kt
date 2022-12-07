@@ -32,6 +32,7 @@ import towson.cosc435.cookbook.database.CookbookViewModel
 import towson.cosc435.cookbook.database.Recipe
 import towson.cosc435.cookbook.screens.addrecipe.Notes
 import towson.cosc435.cookbook.screens.addrecipe.ViewAddedRecipe
+import towson.cosc435.cookbook.ui.theme.Paper
 
 
 val Teal = Color(0xFF009688)
@@ -136,7 +137,7 @@ class MainActivity : ComponentActivity() {
                 }
 
             },
-            backgroundColor = Color.White
+            backgroundColor = Paper
         )
 
     }
