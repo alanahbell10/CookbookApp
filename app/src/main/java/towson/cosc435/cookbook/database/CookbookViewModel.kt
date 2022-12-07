@@ -1,21 +1,49 @@
 package towson.cosc435.cookbook.database
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.launch
 //help from https://www.answertopia.com/jetpack-compose/a-jetpack-compose-room-database-and-repository-tutorial/
 
 class CookbookViewModel(application: Application) : ViewModel() {
     val allRecipes: LiveData<List<Recipe>>
     private val repository: RecipeRepo
-
+    private var connectionStatus = true
     init {
         val recipeDb = RecipeRoomDatabase.getInstance(application)
         val recipeDao = recipeDb.recipeDao()
         repository = RecipeRepo(recipeDao)
 
         allRecipes = repository.allRecipes
+
+        val cm = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netreq = NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+        cm.requestNetwork(netreq, object: ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                val nc = cm.getNetworkCapabilities(network)
+                if (nc == null) {
+                    connectionStatus = false
+                }
+            }
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                Log.d(ViewModel::class.java.simpleName, "Network unavailable")
+                connectionStatus = false
+            }
+        })
     }
 
     fun insertRecipe(recipe: Recipe) {
