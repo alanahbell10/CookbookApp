@@ -1,5 +1,6 @@
 package towson.cosc435.cookbook.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -87,6 +88,13 @@ fun RecipeRow(
                 if (painter.state is AsyncImagePainter.State.Loading) {
                     CircularProgressIndicator(Modifier)
                 }
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(120.dp)
+
+                )
             }
         }
     }
