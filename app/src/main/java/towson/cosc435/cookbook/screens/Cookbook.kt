@@ -75,26 +75,31 @@ fun RecipeRow(
                 modifier = Modifier.padding(10.dp).fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ){
-                val context = LocalContext.current
-                val painter = rememberAsyncImagePainter(
-                    remember(url) {
-                        ImageRequest.Builder(context)
-                            .data(url)
-                            .diskCacheKey(url)
-                            .memoryCacheKey(url)
-                            .build()
+                Column(modifier = Modifier.padding(10.dp)) {
+                    val context = LocalContext.current
+                    val painter = rememberAsyncImagePainter(
+                        remember(url) {
+                            ImageRequest.Builder(context)
+                                .data(url)
+                                .diskCacheKey(url)
+                                .memoryCacheKey(url)
+                                .build()
+                        }
+                    )
+                    if (painter.state is AsyncImagePainter.State.Loading) {
+                        CircularProgressIndicator(Modifier)
                     }
-                )
-                if (painter.state is AsyncImagePainter.State.Loading) {
-                    CircularProgressIndicator(Modifier)
-                }
-                Image(
-                    painter = painter,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(120.dp)
+                    Image(
+                        painter = painter,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(120.dp)
 
-                )
+                    )
+                }
+                Column(modifier = Modifier.padding(10.dp)) {
+                    Text(text = "Serves ${recipe.recipeMinutes}")
+                }
             }
         }
     }
