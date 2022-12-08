@@ -7,6 +7,7 @@ Android (Kotlin) Compose
 Android AppCompat
 Android Room
 Squareup Moshi
+Coil Compose
 
 Images are provided by Unsplash Source
 
