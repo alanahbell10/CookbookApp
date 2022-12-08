@@ -89,7 +89,7 @@ fun RecipeRow(
                     )
                     if (painter.state is AsyncImagePainter.State.Loading) {
                         CircularProgressIndicator(Modifier)
-                    }
+                    }//progressindicator will show until imagepainter is loaded
                     Image(
                         painter = painter,
                         contentDescription = null,

@@ -23,7 +23,6 @@ import towson.cosc435.cookbook.database.CookbookViewModel
 import towson.cosc435.cookbook.database.Recipe
 import towson.cosc435.cookbook.navigation.NavRoutes
 
-//public var recipe = Recipe()
 
 @Composable
 fun ViewRecipe(
