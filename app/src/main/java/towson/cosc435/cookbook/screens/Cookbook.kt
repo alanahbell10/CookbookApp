@@ -24,7 +24,7 @@ import towson.cosc435.cookbook.database.Recipe
 import towson.cosc435.cookbook.navigation.NavRoutes
 import towson.cosc435.cookbook.ui.theme.Purple100
 
-val API_URL = "https://source.unsplash.com/random/?"
+
 @Composable
 fun Cookbook(
     allRecipes: List<Recipe>,
@@ -55,6 +55,7 @@ fun RecipeRow(
 ) {
     val jsonString = Gson().toJson(recipe)
     Card(modifier = Modifier.padding(10.dp).clickable { navController.navigate(NavRoutes.ViewRecipe.route + "/$jsonString" ) }, backgroundColor = Purple100) {
+        val API_URL = "https://source.unsplash.com/random/?"
         var url = API_URL + recipe.recipeName.toString()
         Column(modifier = Modifier.padding(10.dp)) {
             Row(
