@@ -11,8 +11,6 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.NonCancellable.isActive
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -51,9 +49,13 @@ class CookbookViewModel(application: Application) : ViewModel() {
                 connectionStatus = false
             }
         })
-                delay(60 * 1000L)
+                delay(15 * 1000L)
             }
         }
+    }
+
+    fun getConnection(): Boolean{
+        return connectionStatus
     }
 
     fun insertRecipe(recipe: Recipe) {
