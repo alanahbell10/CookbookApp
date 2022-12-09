@@ -44,7 +44,7 @@ fun ViewAddedRecipe(
     var recipe = adapter.fromJson(jsonString)
 
 
-
+    ConfirmDialog()
     Column(
         horizontalAlignment = CenterHorizontally,
         modifier = Modifier
@@ -80,13 +80,17 @@ fun ConfirmDialog() {
                 properties = PopupProperties()
             ){
                 Box(
-                    modifier = Modifier.padding(5.dp)
-                        .size(popupWidth,popupHeight)
-                        .border(2.dp, color = Color.Black,
-                            RoundedCornerShape(10.dp))
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .size(popupWidth, popupHeight)
+                        .border(
+                            2.dp, color = Color.Black,
+                            RoundedCornerShape(10.dp)
+                        )
                 ){
                     Column(
-                        modifier = Modifier.padding(20.dp)
+                        modifier = Modifier
+                            .padding(20.dp)
                             .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
