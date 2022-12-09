@@ -60,22 +60,9 @@ fun RecipeRow(
         Column(modifier = Modifier.padding(10.dp)) {
             Row(
                 modifier = Modifier.padding(10.dp).fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier.padding(10.dp)) {
-                    Text(text = recipe.recipeName)
-                }
-                Column(modifier = Modifier.padding(10.dp)) {
-
-                }
-                Column(modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Serves ${recipe.recipeServings}")
-                }
-            }
-            Row(
-                modifier = Modifier.padding(10.dp).fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ){
                 Column(modifier = Modifier.padding(10.dp)) {
                     val context = LocalContext.current
                     val painter = rememberAsyncImagePainter(
@@ -94,12 +81,18 @@ fun RecipeRow(
                         painter = painter,
                         contentDescription = null,
                         modifier = Modifier
-                            .size(120.dp)
+                            .size(90.dp)
 
                     )
                 }
                 Column(modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Serves ${recipe.recipeMinutes}")
+                    Text(text = recipe.recipeName)
+                }
+                Column(modifier = Modifier.padding(10.dp)) {
+
+                }
+                Column(modifier = Modifier.padding(10.dp)) {
+                    Text(text = "Serves ${recipe.recipeServings}")
                 }
             }
         }

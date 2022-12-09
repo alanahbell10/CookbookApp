@@ -87,7 +87,7 @@ fun ViewRecipe(
                                 .build()
                         }
                     )
-                    if (painter.state is AsyncImagePainter.State.Loading || viewModel.getConnection()) {
+                    if (painter.state is AsyncImagePainter.State.Loading || !viewModel.getConnection()) {
                         CircularProgressIndicator(Modifier)
                     }
                     Image(
