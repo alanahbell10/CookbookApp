@@ -44,14 +44,14 @@ fun ViewAddedRecipe(
     var recipe = adapter.fromJson(jsonString)
 
 
-    ConfirmDialog()
+
     Column(
         horizontalAlignment = CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.padding(20.dp) )
-
+        ConfirmDialog()
         Text("Recipe Name: ${recipe?.recipeName}")
         Text("Servings: ${recipe?.recipeServings}")
         Text("Cook time: ${recipe?.recipeMinutes} minutes")
@@ -87,6 +87,7 @@ fun ConfirmDialog() {
                             2.dp, color = Color.Black,
                             RoundedCornerShape(10.dp)
                         )
+                        .background(color = Color.White)
                 ){
                     Column(
                         modifier = Modifier
