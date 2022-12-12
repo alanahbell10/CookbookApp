@@ -65,8 +65,8 @@ fun Notes(allRecipes: List<Recipe>, viewModel: CookbookViewModel, navController:
                 Text("Add Recipe")
             }
         }
-        item {
-            Text(jsonString.toString())
-        }
+        //item {
+          //  Text(jsonString.toString())
+        //}
     }
 }

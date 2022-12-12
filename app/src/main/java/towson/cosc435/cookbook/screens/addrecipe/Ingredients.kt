@@ -51,9 +51,9 @@ fun Ingredients(navController: NavController, jsonString: String) {
                 Text("Proceed")
             }
         }
-        item {
-            Text(jsonString)
-        }
+        //item {
+          //  Text(jsonString)
+        //}
 
         item {
 
